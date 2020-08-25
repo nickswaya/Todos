@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang='eng'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content= 'width=device-width, initial-scale=1.0'>
+        <link rel="stylesheet" href="../static/styles.css">
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>Todos</h1>>
+
+        {% for todo in todos %}
+            <li>{{ todo.todo_text }}</li>
+        {% endfor %}
+
+        <form method='POST'>
+            {{ template_form.hidden_tag() }}
+            <P>
+                {{ template_form.todo.label }}
+                {{ template_form.todo() }}
+            </P>
+            <p>
+                {{ template_form.submit() }}
+            </p>
+        </form>
+    </body>
+</html>
