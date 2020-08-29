@@ -8,12 +8,13 @@
     </head>
     <body>
         <img src = 'https://pbs.twimg.com/profile_images/1243806677608083456/dgTUsgBf.jpg'>
-        <h1>Todos</h1>>
-
+        <h1>Todos</h1>
+        <form method= 'POST'>
+        {{ template_form.hidden_tag() }}
         {% for todo in todos %}
-            <li>{{ todo.todo_text }}</li>
+            <li>{{ todo.todo_text }}&emsp;<a href = "{{url_for('remove_item', id = todo.id)}}">Remove</a></li>
         {% endfor %}
-
+        </form>    
         <form method='POST'>
             {{ template_form.hidden_tag() }}
             <P>

@@ -22,16 +22,20 @@ class TodoForm(FlaskForm):
     todo= StringField('Todo', validators=[DataRequired()])
     submit = SubmitField('Add Todo')
 
+@FLASK_APP.route('/remove_item/<id>', methods= ['GET','POST'])
+def remove_item(id):
+   #from the Item model, fetch the item with primary key item_id to be deleted
+   db.session.delete(Todo.query.get(id))
+   #using db.session delete the item
+   #commit the deletion
+   db.session.commit()
+   return redirect('/')
 
-
-@FLASK_APP.route('/', methods= ['GET', 'POST'])
-
+@FLASK_APP.route('/', methods= ['GET','POST'])
 def index():
     if 'todo' in request.form:
         db.session.add(Todo(todo_text = request.form['todo']))
         db.session.commit()
         return redirect('/')
     return render_template('index.html', todos=Todo.query.all(), template_form = TodoForm()) 
-
-
 
