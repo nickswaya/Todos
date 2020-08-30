@@ -4,6 +4,6 @@
   <br>
   <body>
     {% for user in current_users %}
-       <ul>{{ user.username }}::{{user.email }}</ul>       
+       <ul>{{ user.username }}::{{user.email }}::{{ user.password }}::{{user.password_hash }}</ul>       
     {% endfor %}
   </body>
