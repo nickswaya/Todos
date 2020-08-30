@@ -1,5 +1,17 @@
 from app import db, Todo
+from sqlalchemy import Table, Column, Integer, String, MetaData, create_engine
+engine = create_engine('sqlite:///myDB.db', echo = True)
+
+meta = MetaData()
+users = Table(
+   'users', meta, 
+   Column('id', Integer, primary_key = True), 
+   Column('username', String), 
+   Column('password', String),
+   Column('email', String) 
+)
 db.create_all()
+meta.create_all(engine)
 
 
 print('x')

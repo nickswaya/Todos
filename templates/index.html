@@ -8,6 +8,9 @@
     </head>
     <body>
         <img src = 'https://pbs.twimg.com/profile_images/1243806677608083456/dgTUsgBf.jpg'>
+        {% if current_user.is_authenticated %}
+        <h1>Hi {{ current_user.username }}!</h1>
+        {% endif %}
         <h1>Todos</h1>
         <form method= 'POST'>
         {{ template_form.hidden_tag() }}
@@ -25,5 +28,34 @@
                 {{ template_form.submit() }}
             </p>
         </form>
+        <p>Current Users <a href="{{ url_for('UserList') }}">User List</a></p>
+    {% if not current_user.is_authenticated %}      
+        <h1 style="color:red">Sign In</h1>     
+    <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+    <form method="POST" name="login">
+        <a href="{{ url_for('login') }}">Login Here!</a>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(size=32) }}<br>
+            {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password(size=32) }}<br>
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.remember() }} {{ form.remember.label }}</p>
+        <p>{{ form.submit() }}</p>
+    {% endif %} 
+    {% if current_user.is_authenticated %} 
+    <a href= "{{ url_for('logout') }}"><h1 style="color:red">Log Out</a></h1>
+    {% endif %} 
+
+    </form>
     </body>
 </html>
