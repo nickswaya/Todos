@@ -25,5 +25,7 @@
                 {{ template_form.submit() }}
             </p>
         </form>
+        <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+        <p>Current Users <a href="{{ url_for('UserList') }}">User List</a></p>
     </body>
 </html>

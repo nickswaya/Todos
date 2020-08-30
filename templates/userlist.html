@@ -1,0 +1,9 @@
+<head>
+    <h1>User List</h1>
+  </head>
+  <br>
+  <body>
+    {% for user in current_users %}
+       <ul>{{ user.username }}::{{user.email }}</ul>       
+    {% endfor %}
+  </body>
