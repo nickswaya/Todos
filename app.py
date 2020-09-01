@@ -22,10 +22,11 @@ login_manager.init_app(FLASK_APP)
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     todo_text = db.Column(db.String(100), index = True)
-
+    
 class TodoForm(FlaskForm):
     todo= StringField('Todo', validators=[DataRequired()])
     submit = SubmitField('Add Todo')
+
 
 @FLASK_APP.route('/remove_item/<id>', methods= ['GET','POST'])
 def remove_item(id):
@@ -34,22 +35,27 @@ def remove_item(id):
    #using db.session delete the item
    #commit the deletion
    db.session.commit()
+   flash(message='ToDo Removed!')
+
    return redirect('/')
 
 @FLASK_APP.route('/', methods= ['GET','POST'])
 def index():
-    flash(message='Created')
     if 'todo' in request.form:
         db.session.add(Todo(todo_text = request.form['todo']))
         db.session.commit()
-        return redirect('/')
+        if current_user.is_authenticated:
+            flash(message='Todo Created! Thank you {}.'.format(current_user.username))
+            return redirect('/')
+        if not current_user.is_authenticated:
+            flash(message='Todo Created! Thank you anonymous user.')
+            return redirect('/')
     return render_template('index.html', todos=Todo.query.all(), template_form = TodoForm(), form=LoginForm()) 
 
 @FLASK_APP.route('/register', methods=['GET', 'POST'])
 def register():
   form = RegistrationForm()
   if form.validate_on_submit():
-    flash(message='Created')
     user = User(username=form.username.data, email=form.email.data)
     user.set_password(form.password.data)
     db.session.add(user)
@@ -83,6 +89,7 @@ class LoginForm(FlaskForm):
   password = PasswordField('Password', validators=[DataRequired()])
   remember = BooleanField('Remember Me')
   submit = SubmitField('Login')
+  
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -113,3 +120,4 @@ def login():
 def logout():
     logout_user()
     return redirect('/')
+
