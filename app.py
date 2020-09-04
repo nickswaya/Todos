@@ -156,7 +156,6 @@ def edit_item(id):
   edit_form = EditForm()
   todo_to_edit = Todo.query.get(id)
   todo_to_edit.todo_text = edit_form.edited_todo.data
-  flash(todo_to_edit.todo_text)
   db.session.commit()
   return redirect(url_for('index')) 
 
