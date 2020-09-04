@@ -1,6 +1,7 @@
 from app import db, Todo
 from sqlalchemy import Table, Column, Integer, String, MetaData, create_engine
 engine = create_engine('sqlite:///myDB.db', echo = True)
+from app import db
 
 meta = MetaData()
 users = Table(
@@ -16,7 +17,7 @@ meta.create_all(engine)
 
 print('x')
 
-
+db.create_all()
 first_todo = Todo(todo_text= "Learn Flask")
 a = Todo(todo_text= "Rocket League")
 s = Todo(todo_text= "Get money")

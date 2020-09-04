@@ -32,5 +32,6 @@
               {% endfor %}
           </p>
           <p>{{ form.submit() }}</p>
+          {{get_flashed_messages()}}
       </form>
   </body>
